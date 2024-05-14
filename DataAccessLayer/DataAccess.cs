@@ -498,7 +498,6 @@ namespace DataAccessLayer
                     activeReservations.Add(reservationInfo);
                 }
             }
-
             return activeReservations;
         }
         public string[] GetAllUsernames()
