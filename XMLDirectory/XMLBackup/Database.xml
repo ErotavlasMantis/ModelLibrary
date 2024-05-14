@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Database>
+  <Users>
+    <UserId>0</UserId>
+    <UserName>Zarbo</UserName>
+    <Password>Salvatore90</Password>
+    <Role>Admin</Role>
+  </Users>
+  <Users>
+    <UserId>1</UserId>
+    <UserName>FirstUser</UserName>
+    <Password>FirstIsMe</Password>
+    <Role>User</Role>
+  </Users>
+  <Users>
+    <UserId>2</UserId>
+    <UserName>1</UserName>
+    <Password>1</Password>
+    <Role>User</Role>
+  </Users>
+  <Books>
+    <BookID>0</BookID>
+    <Title>Le Cinque Ferite E Come Guarirle</Title>
+    <AuthorName>Lise</AuthorName>
+    <AuthorSurname>Bourbeau</AuthorSurname>
+    <PublishingHouse>Amrita Edizioni</PublishingHouse>
+    <Quantity>9</Quantity>
+  </Books>
+  <Books>
+    <BookID>1</BookID>
+    <Title>Confucio Maestro di Vita</Title>
+    <AuthorName>Alexis</AuthorName>
+    <AuthorSurname>Lavis</AuthorSurname>
+    <PublishingHouse>Armenia</PublishingHouse>
+    <Quantity>6</Quantity>
+  </Books>
+  <Books>
+    <BookID>2</BookID>
+    <Title>Risveglio: Con Esercizi Delle Antiche Scuole Esoteriche</Title>
+    <AuthorName>Salvatore</AuthorName>
+    <AuthorSurname>Brizzi</AuthorSurname>
+    <PublishingHouse>Anima Edizioni</PublishingHouse>
+    <Quantity>3</Quantity>
+  </Books>
+  <Books>
+    <BookID>3</BookID>
+    <Title>Waka Waka</Title>
+    <AuthorName>Shakira</AuthorName>
+    <AuthorSurname>Rabiosa</AuthorSurname>
+    <PublishingHouse>Africa</PublishingHouse>
+    <Quantity>2</Quantity>
+  </Books>
+  <Books>
+    <BookID>4</BookID>
+    <Title>Vaffanculo</Title>
+    <AuthorName>Marco</AuthorName>
+    <AuthorSurname>Masini</AuthorSurname>
+    <PublishingHouse>FuckingPubHouse</PublishingHouse>
+    <Quantity>2</Quantity>
+  </Books>
+  <Books>
+    <BookID>5</BookID>
+    <Title>Jimmy Della Collina</Title>
+    <AuthorName>Massimo</AuthorName>
+    <AuthorSurname>Carlotto</AuthorSurname>
+    <PublishingHouse>Giulio Einaudi Autore</PublishingHouse>
+    <Quantity>2</Quantity>
+  </Books>
+  <Books>
+    <BookID>6</BookID>
+    <Title>I Tre Porcellini</Title>
+    <AuthorName>James Orchard</AuthorName>
+    <AuthorSurname>Halliwell-Phillipps</AuthorSurname>
+    <PublishingHouse>Giunti Editore</PublishingHouse>
+    <Quantity>9</Quantity>
+  </Books>
+  <Books>
+    <BookID>7</BookID>
+    <Title>1</Title>
+    <AuthorName>1</AuthorName>
+    <AuthorSurname>1</AuthorSurname>
+    <PublishingHouse>1</PublishingHouse>
+    <Quantity>8</Quantity>
+  </Books>
+  <Reservation>
+    <ID>1</ID>
+    <UserID>2</UserID>
+    <BookID>7</BookID>
+    <StartDate>2024-05-09T16:47:38.7408872+02:00</StartDate>
+    <EndDate>2024-05-09T17:01:24</EndDate>
+  </Reservation>
+  <Reservation>
+    <ID>2</ID>
+    <UserID>2</UserID>
+    <BookID>7</BookID>
+    <StartDate>2024-05-09T16:58:09.195444+02:00</StartDate>
+    <EndDate>2024-05-09T17:10:32</EndDate>
+  </Reservation>
+  <Reservation>
+    <ID>3</ID>
+    <UserID>2</UserID>
+    <BookID>7</BookID>
+    <StartDate>2024-05-09T17:10:55.326616+02:00</StartDate>
+    <EndDate>2024-05-09T17:11:08</EndDate>
+  </Reservation>
+  <Reservation>
+    <ID>4</ID>
+    <UserID>2</UserID>
+    <BookID>7</BookID>
+    <StartDate>2024-05-09T17:12:23.6943491+02:00</StartDate>
+    <EndDate>2024-05-09T17:33:26</EndDate>
+  </Reservation>
+  <Reservation>
+    <ID>5</ID>
+    <UserID>2</UserID>
+    <BookID>2</BookID>
+    <StartDate>2024-05-10T14:25:33.3452191+02:00</StartDate>
+    <EndDate>2024-05-10T14:27:10</EndDate>
+  </Reservation>
+  <Reservation>
+    <ID>6</ID>
+    <UserID>2</UserID>
+    <BookID>2</BookID>
+    <StartDate>2024-05-10T14:27:35.048259+02:00</StartDate>
+    <EndDate>2024-06-09T14:27:35.048259+02:00</EndDate>
+  </Reservation>
+</Database>
