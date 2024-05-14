@@ -46,7 +46,7 @@ namespace BusinessLogic
 
         public IEnumerable<Book> GetAllBooks()
         {
-            return dA.GetAllBooks();
+            return GetAllBooks().ToList();
         }
 
         public IEnumerable<Book> SearchBooksByTitle(string title)
@@ -85,6 +85,10 @@ namespace BusinessLogic
         }
         public Reservation ReserveABook(string? title, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
         {
+            // verifica che la quantità di prenotazioni attive sia munore alla quantità disponibile
+            if (dA.IsBookReservable(title, authorName, authorSurname, publishingHouse) == false) 
+                return null;
+            else
             return dA.ReserveABook(title, authorName, authorSurname, publishingHouse);
         }
         public List<string> UserActiveReservations()
@@ -96,7 +100,7 @@ namespace BusinessLogic
         {
             dA.BorrowedBookReturn(title, authorName, authorSurname, publishingHouse);
         }
-        
+
         public List<string> CheckUserReservations(string userName)
         {
             int? userID = dA.FindUserIdByUsername(userName);
@@ -108,7 +112,7 @@ namespace BusinessLogic
 
         public List<(string Title, string Username)> GetActiveReservations()
         {
-            
+
             List<(string Title, string Username)> reservationsList = dA.GetActiveReservations();
 
             return reservationsList;

@@ -3,6 +3,7 @@ using System.Data;
 using System.Net;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -414,6 +415,7 @@ namespace DataAccessLayer
                 return reservationObject;
             }
         }
+
         public void BorrowedBookReturn(string? title, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
         {
             XDocument xmlDocument = LoadXml();
@@ -500,6 +502,34 @@ namespace DataAccessLayer
             }
             return activeReservations;
         }
+        public bool IsBookReservable(string? title = null, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
+        {
+            // Cerca il libro con le proprietà specificate
+            var booksList = SearchBooksByAllProperties(title, authorName, authorSurname, publishingHouse).ToList();
+
+            // Se non è stato trovato alcun libro o se ci sono più risultati, non possiamo procedere
+            if (booksList.Count != 1)
+            {
+                return false;
+            }
+
+            // Ottieni il libro trovato
+            var book = booksList[0];
+
+            // Carica il documento XML
+            XDocument xmlDocument = LoadXml();
+
+            // Calcola il numero di prenotazioni attive per questo libro
+            DateTime now = DateTime.Now;
+            var activeReservations = xmlDocument.Descendants("Reservation")
+                                                .Where(r => (int)r.Element("BookID") == book.BookID)
+                                                .Where(r => DateTime.Parse((string)r.Element("StartDate")) <= now && DateTime.Parse((string)r.Element("EndDate")) >= now)
+                                                .Count();
+
+            // Verifica se il numero di prenotazioni attive è minore alla quantità disponibile
+            return activeReservations < book.Quantity;
+        }
+
         public string[] GetAllUsernames()
         {
                 XDocument xmlDocument = LoadXml();
@@ -610,9 +640,9 @@ namespace DataAccessLayer
                     userNames[userID] = FindUsernameByUserID(userID); // Aggiungiamo l'ID utente e il suo username al dizionario
                 }
             }
-
             return userNames;
         }
+
     }
 }
 

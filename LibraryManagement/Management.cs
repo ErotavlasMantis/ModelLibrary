@@ -37,7 +37,7 @@ namespace LibraryManagement
             Console.ResetColor();
         }
 
-        public void Login()
+        public int Login()
         {
             Title("Inserisci le tue credenziali...");
             Console.Write("Inserisci username: ");
@@ -49,14 +49,17 @@ namespace LibraryManagement
             if (result == 1)
             {
                 Success($"Benvenuto {username}! Ora avrai i tuoi privilegi da Admin!");
+                return 1;
             }
             else if (result == 2)
             {
                 Success($"Benvenuto {username}!");
+                return 2;
             }
             else
             {
                 Error("Credenziali non valide.");
+                return 0;
             }
         }
         public void AddOrUpdate()
@@ -270,7 +273,7 @@ namespace LibraryManagement
 
             if (bL.ReserveABook(title, authorName, authorSurname, publishingHouse) == null)
             {
-                Error("Il risultato della tua ricerca potrebbe non aver trovato nessun risultato oppure potresti avere già una prenotazione attiva!");
+                Error("Spiacente. Il risultato della tua ricerca potrebbe non aver trovato nessun risultato, potresti avere già una prenotazione attiva oppure non ci sono più libri disponibili nella nostra libreria!!");
             }
         }
         public void UserActiveReservations()
