@@ -1,4 +1,5 @@
 ﻿using ModelLibrary;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Net;
 using System.Reflection.Metadata;
@@ -11,7 +12,7 @@ namespace DataAccessLayer
 {
     public class DataAccess
     {
-        internal const string databaseXMLFilePath = "C:\\Users\\user\\Desktop\\ModelLibrary\\XMLDirectory\\Database.xml";
+        internal const string databaseXMLFilePath = "C:\\ModelLibraryDatabase\\Database.xml";
 
         internal LoginResult result = LoginResult.GetInstance();
         public XDocument LoadXml()
@@ -266,20 +267,19 @@ namespace DataAccessLayer
             return searchResults;
         }
 
-        public (List<Book>, string) OneResultOnly(string? title = null, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
+        public List<Book> OneResultOnly(string? title = null, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
         {
             var booksList = SearchBooksByAllProperties(title, authorName, authorSurname, publishingHouse).ToList();
             if (booksList.Count == 1)
             {
-                return (booksList, "Un risultato!");
+                return booksList;
             }
 
             else if (booksList.Count < 1)
             {
-                return (booksList, "Nessun risultato");
+                return booksList;
             }
-
-            else return (booksList, "Più di un risultato");
+            else return booksList;
         }
 
         public bool UpdateBookProperties(string? title, string? authorName, string? authorSurname, string? publishingHouse, string? newTitle = null, string? newAuthorName = null, string? newAuthorSurname = null, string? newPublishingHouse = null)
@@ -357,7 +357,7 @@ namespace DataAccessLayer
 
         public (int, int) IDUserAndIDBookTuples(string? title, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
         {
-            (List<Book> booksList, string returning) = OneResultOnly(title, authorName, authorSurname, publishingHouse);
+            List<Book> booksList = OneResultOnly(title, authorName, authorSurname, publishingHouse);
             var bookID = booksList[0].BookID;
             var userID = result.ID;
             return (userID, bookID);
@@ -367,7 +367,7 @@ namespace DataAccessLayer
         {
             XDocument xmlDocument = LoadXml();
 
-            (List<Book> booksList, string returning) = OneResultOnly(title, authorName, authorSurname, publishingHouse);
+            List<Book> booksList = OneResultOnly(title, authorName, authorSurname, publishingHouse);
             int bookID = booksList[0].BookID;
             int userID = result.ID;
 
@@ -416,27 +416,30 @@ namespace DataAccessLayer
             }
         }
 
-        public void BorrowedBookReturn(string? title, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
+        public bool BorrowedBookReturn(string? title, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
         {
             XDocument xmlDocument = LoadXml();
 
-            (List<Book> booksList, string returning) = OneResultOnly(title, authorName, authorSurname, publishingHouse);
-            int bookID = booksList[0].BookID;
-            int userID = result.ID;
+            List<Book> booksList = OneResultOnly(title, authorName, authorSurname, publishingHouse);
 
-
-            var reservation = xmlDocument.Root.Elements("Reservation")
-                .LastOrDefault(r => r.Element("UserID") != null && (int)r.Element("UserID") == userID
-                                     && r.Element("BookID") != null && (int)r.Element("BookID") == bookID);
-
-            if (reservation != null)
+            if (booksList.Count == 1)
             {
-                // Imposta la data di restituzione sulla data corrente il file XML divide data e ora
-                string formattedDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-                reservation.SetElementValue("EndDate", formattedDate);
+                int bookID = booksList[0].BookID;
+                int userID = result.ID;
+                var reservation = xmlDocument.Root.Elements("Reservation")
+                    .LastOrDefault(r => r.Element("UserID") != null && (int)r.Element("UserID") == userID
+                                         && r.Element("BookID") != null && (int)r.Element("BookID") == bookID);
+                if (reservation != null)
+                {
+                    // Imposta la data di restituzione sulla data corrente il file XML divide data e ora
+                    string formattedDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                    reservation.SetElementValue("EndDate", formattedDate);
 
-                SetXDocument(xmlDocument);
+                    SetXDocument(xmlDocument);
+                }
+                return true;
             }
+            else return false;
         }
 
         public int? FindUserIdByUsername(string username)
@@ -554,7 +557,7 @@ namespace DataAccessLayer
         }
         public int[] ReadAllUserReservationsID(string? title = null, string? authorName = null, string? authorSurname = null, string? publishingHouse = null) // RESTITUISCE LE IDRESERVATION ATTIVE DEL LIBRO
         {
-            (List<Book> booksList, string returning) = OneResultOnly(title, authorName, authorSurname, publishingHouse);
+            List<Book> booksList = OneResultOnly(title, authorName, authorSurname, publishingHouse);
             int bookID = booksList[0].BookID;
 
             XDocument xmlDocument = LoadXml();
@@ -619,7 +622,7 @@ namespace DataAccessLayer
         }
         public Dictionary<int, string> ReadAllUserReservations(string? title = null, string? authorName = null, string? authorSurname = null, string? publishingHouse = null)
         {
-            (List<Book> booksList, string returning) = OneResultOnly(title, authorName, authorSurname, publishingHouse);
+            List<Book> booksList = OneResultOnly(title, authorName, authorSurname, publishingHouse);
             int bookID = booksList[0].BookID;
 
             XDocument xmlDocument = LoadXml();

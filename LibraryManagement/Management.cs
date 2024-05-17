@@ -275,6 +275,10 @@ namespace LibraryManagement
             {
                 Error("Spiacente. Il risultato della tua ricerca potrebbe non aver trovato nessun risultato, potresti avere già una prenotazione attiva oppure non ci sono più libri disponibili nella nostra libreria!!");
             }
+            else
+            {
+                Success("Libro prenotato!");
+            }
         }
         public void UserActiveReservations()
         {
@@ -288,7 +292,12 @@ namespace LibraryManagement
         {
             (string title, string authorName, string authorSurname, string publishingHouse) = BookSearching(title = null, authorName = null, authorSurname = null, publishingHouse = null);
 
-            bL.BorrowedBookReturn(title, authorName, authorSurname, publishingHouse);
+           if (bL.BorrowedBookReturn(title, authorName, authorSurname, publishingHouse) == true)
+            {
+                Success("Libro restituito correttamente!!");
+            }
+           else
+                Error("Spiacente. Il risultato della tua ricerca potrebbe non aver trovato nessun risultato, potresti avere già una prenotazione attiva oppure non ci sono più libri disponibili nella nostra libreria!!");
         }
         public void CheckUserReservations()
         {
