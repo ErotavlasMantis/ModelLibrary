@@ -1,6 +1,4 @@
-﻿
-
-namespace DataAccessLayer
+﻿namespace DataAccessLayer
 {
     public class LoginResult
     {
